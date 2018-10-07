@@ -1,4 +1,6 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+// const ExtractTextPlugin = require('extract-text-webpack-plugin');
+// const path = require('path');
 module.exports = {
   // entry: {
   //   app: './src/index.js',
@@ -8,6 +10,7 @@ module.exports = {
   //   filename: '[name].js',
   //   path: path.resolve(__dirname, 'dist')
   // },
+  
   module: {
     rules: [
         {
@@ -28,13 +31,23 @@ module.exports = {
           }
          
         },
+        {
+          test: /\.css$/,
+          use: ExtractTextPlugin.extract({
+              fallback: 'style-loader',
+              use: ['css-loader'],
+          }),
+      },
     ]
   },
   plugins: [
     new HtmlWebPackPlugin({
       template: "./src/index.html",
       filename: "./index.html"
-    })
+    }),
+    new ExtractTextPlugin({
+      filename: "./css/style.css"
+  })
 
   ]
 };
